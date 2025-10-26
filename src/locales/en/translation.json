@@ -1,0 +1,76 @@
+{
+  "game": {
+    "title": "Pixel Cheese Shop",
+    "subtitle": "Cut cheese, serve customers, and grow your reputation! Move with WASD/Arrows. Press 'E' at the cutting board to serve.",
+    "startButton": "Start Game",
+    "playAgain": "Play Again",
+    "gameOver": "Game Over",
+    "youLost": "YOU LOST!",
+    "continue": "Continue",
+    "finalMoney": "Final money: ${{amount}}",
+    "newHighScore": "New High Score!",
+    "enterName": "Enter your name",
+    "saveScore": "Save Score",
+    "highScores": "High Scores",
+    "noScoresYet": "No scores yet!",
+    "settings": "Settings"
+  },
+  "hud": {
+    "money": "${{amount}}",
+    "reputation": "Reputation",
+    "stock": "{{amount}}g",
+    "cheeseStock": "Cheese Stock",
+    "lowStockWarning": "LOW STOCK!",
+    "criticalReputation": "CRITICAL: Reputation Almost Gone!",
+    "criticalStock": "CRITICAL: Almost Out of Cheese!",
+    "buyProvisions": "Buy Provisions"
+  },
+  "interaction": {
+    "pressE": "Press [E]",
+    "serving": "Serving..."
+  },
+  "minigame": {
+    "title": "Cut the Cheese!",
+    "order": "Order: {{weight}}g of {{type}}",
+    "instruction": "Draw along the guide carefully!",
+    "shapeInstruction": "Follow the {{shape}} shape!",
+    "cutResult": "Cut Result",
+    "accuracy": "Accuracy: {{percent}}%",
+    "salePrice": "Sale Price: ${{price}}",
+    "reputationChange": "Reputation: {{change}}",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "shapes": {
+    "vertical": "vertical line",
+    "horizontal": "horizontal line",
+    "circle": "circle",
+    "heart": "heart",
+    "pentagon": "pentagon",
+    "zigzag": "zigzag",
+    "diagonal": "diagonal line"
+  },
+  "cheese": {
+    "Cheddar": "Cheddar",
+    "Gouda": "Gouda",
+    "Brie": "Brie"
+  },
+  "provisions": {
+    "cost": "Cost: ${{price}}/100g",
+    "buy100": "+100g",
+    "buy500": "+500g"
+  },
+  "gameOverReasons": {
+    "noStock": "You ran out of cheese!",
+    "noReputation": "Your reputation is ruined!",
+    "orderFailed": "You ran out of cheese for the order!"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "english": "English",
+    "spanish": "Español",
+    "close": "Close",
+    "apply": "Apply"
+  }
+}

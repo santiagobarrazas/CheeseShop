@@ -1,0 +1,76 @@
+{
+  "game": {
+    "title": "Tienda de Quesos Pixel",
+    "subtitle": "¡Corta queso, sirve clientes y mejora tu reputación! Muévete con WASD/Flechas. Presiona 'E' en la tabla de cortar para servir.",
+    "startButton": "Iniciar Juego",
+    "playAgain": "Jugar de Nuevo",
+    "gameOver": "Fin del Juego",
+    "youLost": "¡PERDISTE!",
+    "continue": "Continuar",
+    "finalMoney": "Dinero final: ${{amount}}",
+    "newHighScore": "¡Nuevo Récord!",
+    "enterName": "Ingresa tu nombre",
+    "saveScore": "Guardar Puntuación",
+    "highScores": "Mejores Puntuaciones",
+    "noScoresYet": "¡Aún no hay puntuaciones!",
+    "settings": "Configuración"
+  },
+  "hud": {
+    "money": "${{amount}}",
+    "reputation": "Reputación",
+    "stock": "{{amount}}g",
+    "cheeseStock": "Stock de Queso",
+    "lowStockWarning": "¡STOCK BAJO!",
+    "criticalReputation": "CRÍTICO: ¡Reputación Casi Perdida!",
+    "criticalStock": "CRÍTICO: ¡Casi Sin Queso!",
+    "buyProvisions": "Comprar Provisiones"
+  },
+  "interaction": {
+    "pressE": "Presiona [E]",
+    "serving": "Sirviendo..."
+  },
+  "minigame": {
+    "title": "¡Corta el Queso!",
+    "order": "Pedido: {{weight}}g de {{type}}",
+    "instruction": "¡Dibuja siguiendo la guía con cuidado!",
+    "shapeInstruction": "¡Sigue la forma de {{shape}}!",
+    "cutResult": "Resultado del Corte",
+    "accuracy": "Precisión: {{percent}}%",
+    "salePrice": "Precio de Venta: ${{price}}",
+    "reputationChange": "Reputación: {{change}}",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
+  },
+  "shapes": {
+    "vertical": "línea vertical",
+    "horizontal": "línea horizontal",
+    "circle": "círculo",
+    "heart": "corazón",
+    "pentagon": "pentágono",
+    "zigzag": "zigzag",
+    "diagonal": "línea diagonal"
+  },
+  "cheese": {
+    "Cheddar": "Cheddar",
+    "Gouda": "Gouda",
+    "Brie": "Brie"
+  },
+  "provisions": {
+    "cost": "Costo: ${{price}}/100g",
+    "buy100": "+100g",
+    "buy500": "+500g"
+  },
+  "gameOverReasons": {
+    "noStock": "¡Te quedaste sin queso!",
+    "noReputation": "¡Tu reputación está arruinada!",
+    "orderFailed": "¡Te quedaste sin queso para el pedido!"
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "english": "English",
+    "spanish": "Español",
+    "close": "Cerrar",
+    "apply": "Aplicar"
+  }
+}

@@ -1,0 +1,40 @@
+/* Global styles for Pixel Cheese Shop */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'VT323', monospace;
+  background-color: #333;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Prevent text selection in game */
+.pixelated {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #222;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
