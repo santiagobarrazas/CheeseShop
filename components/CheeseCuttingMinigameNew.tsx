@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { CheeseOrder, CutResult, CutShape } from '../types';
 import { CHEESE_TYPES } from '../constants';
 import { Panel } from './UiElements';
+import { sound } from '../src/audio/soundManager';
 
 interface CheeseCuttingMinigameProps {
   order: CheeseOrder;
@@ -166,6 +167,7 @@ const CheeseCuttingMinigame: React.FC<CheeseCuttingMinigameProps> = ({ order, re
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (phase !== 'cutting') return;
     setIsCutting(true);
+    sound.play('slice');
     setCutPath([getMousePos(e)]);
   };
 
@@ -209,6 +211,7 @@ const CheeseCuttingMinigame: React.FC<CheeseCuttingMinigameProps> = ({ order, re
     const repChange = (accuracy - 0.7) * 10 * (order.difficulty / 3);
 
     setCutResult({ accuracy, weightSold, finalPrice, repChange });
+    if (repChange >= 0) { sound.play('success'); } else { sound.play('fail'); }
     setPhase('result');
   };
 

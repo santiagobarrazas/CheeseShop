@@ -10,6 +10,11 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ onClose }) => {
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = React.useState(i18n.language);
 
+  const [soundEnabled, setSoundEnabled] = React.useState(() => (localStorage.getItem('soundEnabled') ?? 'true') === 'true');
+  const [volume, setVolume] = React.useState<number>(() => parseFloat(localStorage.getItem('soundVolume') ?? '0.8'));
+  const toggleSound = (v: boolean) => { setSoundEnabled(v); localStorage.setItem('soundEnabled', String(v)); };
+  const onVolume = (v: number) => { setVolume(v); localStorage.setItem('soundVolume', String(v)); };
+
   const handleLanguageChange = (lang: string) => {
     setSelectedLanguage(lang);
     i18n.changeLanguage(lang);

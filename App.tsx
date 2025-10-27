@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import GameScene from './components/GameScene';
 import Hud from './components/Hud';
 import CheeseCuttingMinigame from './components/CheeseCuttingMinigameNew';
 import SettingsMenu from './components/SettingsMenu';
 import { Panel } from './components/UiElements';
+import { sound } from './src/audio/soundManager';
 import { GameState, Npc, CheeseOrder, CutResult, HighScore } from './types';
 import {
   INITIAL_MONEY,
@@ -60,6 +61,67 @@ const App: React.FC = () => {
 
   const [saleFeedback, setSaleFeedback] = useState<{ id: number; amount: number } | null>(null);
 
+  // === Música de fondo SIEMPRE ===
+const bgmRef = useRef<HTMLAudioElement | null>(null);
+
+// Usar BASE_URL de Vite para que funcione en / (local) y /CheeseShop/ (GitHub Pages)
+const BASE = (import.meta as any).env?.BASE_URL ?? '/';
+const BGM_SRC = `${BASE}music/cheese.mp3`; // <-- tu archivo en public/music/cheese.mp3
+
+const startBgm = useCallback(() => {
+  // Si ya existe y está en pausa, reintenta play
+  if (bgmRef.current) {
+    if (bgmRef.current.paused) {
+      bgmRef.current.play().catch(() => {});
+    }
+    return;
+  }
+
+  // Crear el audio y arrancar
+  const a = new Audio(BGM_SRC);
+  a.loop = true;
+  a.volume = 0.1; // ajusta 0.0 - 1.0 a tu gusto
+  bgmRef.current = a;
+
+  // Intento inicial
+  a.play().catch(() => {
+    // Si el navegador bloquea autoplay, reintenta al primer click/tecla
+    const unlock = () => {
+      a.play().finally(() => {
+        window.removeEventListener('pointerdown', unlock);
+        window.removeEventListener('keydown', unlock);
+      });
+    };
+    window.addEventListener('pointerdown', unlock, { once: true });
+    window.addEventListener('keydown', unlock, { once: true });
+  });
+
+  // Si por alguna razón termina (no debería por loop), vuelve a arrancar
+  a.addEventListener('ended', () => {
+    a.currentTime = 0;
+    a.play().catch(() => {});
+  });
+}, []);
+
+useEffect(() => {
+  // Arranca el BGM al montar App
+  startBgm();
+
+  // También intenta otra vez tras la primera interacción (por si falló el autoplay)
+  const retry = () => startBgm();
+  window.addEventListener('pointerdown', retry, { once: true });
+  window.addEventListener('keydown', retry, { once: true });
+
+  // Limpieza al desmontar
+  return () => {
+    window.removeEventListener('pointerdown', retry);
+    window.removeEventListener('keydown', retry);
+    try { bgmRef.current?.pause(); } catch {}
+    bgmRef.current = null;
+  };
+}, [startBgm]);
+
+
   useEffect(() => {
     try {
       const storedScores = localStorage.getItem(HIGH_SCORES_KEY);
@@ -77,11 +139,13 @@ const App: React.FC = () => {
   }, []);
 
   const handleGameOver = useCallback((reason: string) => {
+    sound.play('warning');
     setGameOverReason(reason);
     setGameState(GameState.GameOverWarning);
   }, []);
 
   const proceedToGameOver = useCallback(() => {
+    sound.play('game_over');
     setGameState(GameState.GameOver);
     
     const lowestScore = highScores.length < MAX_HIGH_SCORES ? 0 : highScores[highScores.length - 1].score;
@@ -98,6 +162,7 @@ const App: React.FC = () => {
   });
 
   const startGame = () => {
+    sound.play('click');
     setMoney(INITIAL_MONEY);
     setReputation(INITIAL_REPUTATION);
     setProvisions(INITIAL_PROVISIONS);
@@ -131,6 +196,7 @@ const App: React.FC = () => {
       cutShape: selectedShape.type,
       difficulty: selectedShape.difficulty,
     });
+    sound.play('start');
     setGameState(GameState.Cutting);
   }, [canServe, npcs, gameTimeSeconds]);
 
@@ -182,6 +248,7 @@ const App: React.FC = () => {
     setProvisions(prev => prev - weightSold);
     
     setSaleFeedback({ id: Date.now(), amount: finalPrice });
+    sound.play('cash');
     setTimeout(() => setSaleFeedback(null), 1500);
 
     setNpcs(prev => prev.slice(1));
@@ -335,6 +402,7 @@ const App: React.FC = () => {
             reputation={reputation}
             onCutComplete={handleCutComplete}
             onCancel={() => {
+              sound.play('click');
               setGameState(GameState.Playing);
               setActiveOrder(null);
             }}
