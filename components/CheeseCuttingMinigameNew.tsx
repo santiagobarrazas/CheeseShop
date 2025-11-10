@@ -272,7 +272,7 @@ const CheeseCuttingMinigame: React.FC<CheeseCuttingMinigameProps> = ({ order, re
                 style={{ 
                   width: CHEESE_WHEEL_SIZE, 
                   height: CHEESE_WHEEL_SIZE,
-                  backgroundImage: `url(/img/${order.cheeseType}.jpg)`,
+                  backgroundImage: `url(./img/${order.cheeseType}.jpg)`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center'
                 }}

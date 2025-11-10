@@ -116,23 +116,23 @@ const GameScene: React.FC<GameSceneProps> = ({ npcs, playerPos, setPlayerPos, ca
                   {/* Cheese wheels on shelf with images */}
                   <div 
                     className="absolute top-2 left-2 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Cheddar.jpg)', backgroundSize: 'cover' }}
                   ></div>
                   <div 
                     className="absolute top-2 left-10 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Gouda.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Gouda.jpg)', backgroundSize: 'cover' }}
                   ></div>
                   <div 
                     className="absolute top-12 left-2 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Brie.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Brie.jpg)', backgroundSize: 'cover' }}
                   ></div>
                   <div 
                     className="absolute top-12 left-10 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Cheddar.jpg)', backgroundSize: 'cover' }}
                   ></div>
                   <div 
                     className="absolute top-22 left-6 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Gouda.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Gouda.jpg)', backgroundSize: 'cover' }}
                   ></div>
                 </div>
                 
@@ -145,19 +145,19 @@ const GameScene: React.FC<GameSceneProps> = ({ npcs, playerPos, setPlayerPos, ca
                   {/* Cheese wheels with images */}
                   <div 
                     className="absolute top-2 left-2 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Cheddar.jpg)', backgroundSize: 'cover' }}
                   ></div>
                   <div 
                     className="absolute top-2 left-10 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Brie.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Brie.jpg)', backgroundSize: 'cover' }}
                   ></div>
                   <div 
                     className="absolute top-12 left-6 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Gouda.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Gouda.jpg)', backgroundSize: 'cover' }}
                   ></div>
                   <div 
                     className="absolute top-22 left-2 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
-                    style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                    style={{ backgroundImage: 'url(./img/Cheddar.jpg)', backgroundSize: 'cover' }}
                   ></div>
                 </div>
                 
@@ -182,11 +182,11 @@ const GameScene: React.FC<GameSceneProps> = ({ npcs, playerPos, setPlayerPos, ca
               {/* Cheese samples on counter with images */}
               <div 
                 className="absolute top-[-20px] left-10 w-14 h-7 rounded-md border-2 border-black shadow-md transform -rotate-6 overflow-hidden"
-                style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                style={{ backgroundImage: 'url(./img/Cheddar.jpg)', backgroundSize: 'cover' }}
               ></div>
               <div 
                 className="absolute top-[-18px] left-28 w-10 h-6 rounded-md border-2 border-black shadow-md transform rotate-12 overflow-hidden"
-                style={{ backgroundImage: 'url(/img/Gouda.jpg)', backgroundSize: 'cover' }}
+                style={{ backgroundImage: 'url(./img/Gouda.jpg)', backgroundSize: 'cover' }}
               ></div>
               
               {/* Knife */}
