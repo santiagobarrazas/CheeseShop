@@ -20,11 +20,12 @@ export const NPC_SIZE = { width: 32, height: 48 };
 export const MAX_QUEUE_LENGTH = 5;
 
 // --- Difficulty Scaling ---
-export const INITIAL_NPC_SPAWN_RATE_MS = 5000;
-export const MIN_SPAWN_RATE_MS = 1500; // The fastest spawn rate
-export const SPAWN_RATE_DECREASE_PER_MINUTE = 500; // How much faster it gets each minute
+export const INITIAL_NPC_SPAWN_RATE_MS = 4500; // Empieza más rápido
+export const MIN_SPAWN_RATE_MS = 1200; // Mucho más frenético al final
+export const SPAWN_RATE_DECREASE_PER_MINUTE = 600; // Progresión más agresiva
 
-export const PATIENCE_DECAY_RATE = 0.1; // points per frame
+export const PATIENCE_DECAY_RATE = 0.12; // Más impacientes desde el inicio
+export const PATIENCE_DECAY_INCREASE_PER_MINUTE = 0.02; // Aumenta más rápido
 
 export const SHOP_WINDOW_POS: Position = { x: 400, y: 190 }; // Where NPCs stand OUTSIDE
 export const INTERACTION_POS: Position = { x: 384, y: 270 }; // Where player stands INSIDE, now centered on the cutting board
@@ -49,12 +50,12 @@ export interface ShapeDefinition {
 
 export const CUT_SHAPES: ShapeDefinition[] = [
   { type: 'vertical', difficulty: 1, unlockTime: 0 },
-  { type: 'horizontal', difficulty: 1, unlockTime: 15 },
-  { type: 'diagonal', difficulty: 2, unlockTime: 30 },
-  { type: 'zigzag', difficulty: 3, unlockTime: 60 },
-  { type: 'circle', difficulty: 4, unlockTime: 90 },
-  { type: 'pentagon', difficulty: 5, unlockTime: 120 },
-  { type: 'heart', difficulty: 6, unlockTime: 150 },
+  { type: 'horizontal', difficulty: 1, unlockTime: 10 },    // Era 15
+  { type: 'diagonal', difficulty: 2, unlockTime: 20 },      // Era 30
+  { type: 'zigzag', difficulty: 3, unlockTime: 40 },        // Era 60
+  { type: 'circle', difficulty: 4, unlockTime: 60 },        // Era 90
+  { type: 'pentagon', difficulty: 5, unlockTime: 80 },      // Era 120
+  { type: 'heart', difficulty: 6, unlockTime: 100 },        // Era 150
 ];
 
 // --- High Score System ---

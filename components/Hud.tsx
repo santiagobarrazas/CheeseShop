@@ -5,11 +5,12 @@ import { LOW_STOCK_THRESHOLD } from '../constants';
 
 interface HudProps {
   money: number;
+  totalEarnings: number;
   reputation: number;
   provisions: number;
 }
 
-const Hud: React.FC<HudProps> = ({ money, reputation, provisions }) => {
+const Hud: React.FC<HudProps> = ({ money, totalEarnings, reputation, provisions }) => {
   const { t } = useTranslation();
   const repColor = reputation > 60 ? 'bg-green-500' : reputation > 30 ? 'bg-yellow-500' : 'bg-red-500';
   const isLowStock = provisions < LOW_STOCK_THRESHOLD;
@@ -17,9 +18,14 @@ const Hud: React.FC<HudProps> = ({ money, reputation, provisions }) => {
   return (
     <>
       <div className="absolute top-0 left-0 right-0 p-3 flex justify-between items-start z-10 text-shadow text-2xl text-white">
-        <Panel className="flex items-center space-x-2">
-          <span className="text-yellow-300 text-3xl">$</span>
-          <span className="text-3xl">{Math.floor(money)}</span>
+        <Panel className="flex flex-col items-start">
+          <div className="flex items-center space-x-2">
+            <span className="text-yellow-300 text-3xl">$</span>
+            <span className="text-3xl">{Math.floor(money)}</span>
+          </div>
+          <div className="text-sm text-green-400 -mt-1">
+            {t('hud.score')}: ${Math.floor(totalEarnings)}
+          </div>
         </Panel>
 
         <Panel className={`flex flex-col items-end ${isLowStock ? 'animate-pulse bg-red-400' : ''}`}>

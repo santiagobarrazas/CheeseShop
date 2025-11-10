@@ -126,21 +126,49 @@ const calculateAccuracy = (userPath: Point[], guidePath: Point[], shape: CutShap
     return Math.max(0.1, 1 - normalizedError);
   }
 
-  // Complex shapes (circle, pentagon, heart, zigzag)
-  const totalError = userPath.reduce((sum, userPoint) => {
-    // Find minimum distance to guide path
+  // Complex shapes - improved algorithm with bidirectional checking
+  // Check 1: How close is the user path to the guide?
+  const userToGuideError = userPath.reduce((sum, userPoint) => {
     const minDistance = guidePath.reduce((min, guidePoint) => {
       const dx = userPoint.x - guidePoint.x;
       const dy = userPoint.y - guidePoint.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
       return Math.min(min, distance);
     }, Infinity);
+    return sum + minDistance;
+  }, 0);
+  
+  // Check 2: How well does the user path cover the guide? (important for zigzag/pentagon)
+  const guideToUserError = guidePath.reduce((sum, guidePoint, index) => {
+    // Sample every 3rd point to avoid over-penalization
+    if (index % 3 !== 0) return sum;
     
+    const minDistance = userPath.reduce((min, userPoint) => {
+      const dx = userPoint.x - guidePoint.x;
+      const dy = userPoint.y - guidePoint.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      return Math.min(min, distance);
+    }, Infinity);
     return sum + minDistance;
   }, 0);
 
-  const averageError = totalError / userPath.length;
-  const normalizedError = Math.min(1, averageError / 30);
+  const avgUserToGuide = userToGuideError / userPath.length;
+  const avgGuideToUser = guideToUserError / (guidePath.length / 3);
+  
+  // Weighted average - user following guide is more important
+  const combinedError = (avgUserToGuide * 0.6) + (avgGuideToUser * 0.4);
+  
+  // Shape-specific tolerance
+  let tolerance = 30;
+  if (shape === 'zigzag') {
+    tolerance = 60; // Very forgiving for zigzag
+  } else if (shape === 'pentagon') {
+    tolerance = 55; // Very forgiving for pentagon
+  } else if (shape === 'heart') {
+    tolerance = 35; // Slightly more forgiving for heart
+  }
+  
+  const normalizedError = Math.min(1, combinedError / tolerance);
   return Math.max(0.1, 1 - normalizedError);
 };
 

@@ -47,6 +47,7 @@ const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.Start);
   const [showSettings, setShowSettings] = useState(false);
   const [money, setMoney] = useState(INITIAL_MONEY);
+  const [totalEarnings, setTotalEarnings] = useState(0); // Total money earned during the game
   const [reputation, setReputation] = useState(INITIAL_REPUTATION);
   const [provisions, setProvisions] = useState(INITIAL_PROVISIONS);
   const [npcs, setNpcs] = useState<Npc[]>([]);
@@ -149,10 +150,10 @@ useEffect(() => {
     setGameState(GameState.GameOver);
     
     const lowestScore = highScores.length < MAX_HIGH_SCORES ? 0 : highScores[highScores.length - 1].score;
-    if (money > lowestScore) {
+    if (totalEarnings > lowestScore) {
       setIsNewHighScore(true);
     }
-  }, [money, highScores]);
+  }, [totalEarnings, highScores]);
 
   const { resetGameLoop, gameTimeSeconds } = useGameLoop({
     gameState,
@@ -164,6 +165,7 @@ useEffect(() => {
   const startGame = () => {
     sound.play('click');
     setMoney(INITIAL_MONEY);
+    setTotalEarnings(0); // Reset total earnings
     setReputation(INITIAL_REPUTATION);
     setProvisions(INITIAL_PROVISIONS);
     setNpcs([]);
@@ -244,6 +246,7 @@ useEffect(() => {
     }
 
     setMoney(prev => prev + finalPrice);
+    setTotalEarnings(prev => prev + finalPrice); // Track total earnings
     updateReputation(repChange);
     setProvisions(prev => prev - weightSold);
     
@@ -281,7 +284,7 @@ useEffect(() => {
     if (playerName.trim() === '') return;
 
     try {
-      const newScore: HighScore = { name: playerName.trim(), score: Math.floor(money) };
+      const newScore: HighScore = { name: playerName.trim(), score: Math.floor(totalEarnings) };
       const updatedScores = [...highScores, newScore]
         .sort((a, b) => b.score - a.score)
         .slice(0, MAX_HIGH_SCORES);
@@ -295,88 +298,109 @@ useEffect(() => {
   };
 
   return (
-    <div className="bg-[#303030] flex items-center justify-center min-h-screen">
+    <div className="bg-[#303030] flex items-center justify-center min-h-screen py-8">
       <div
         className="relative bg-[#5d9250] overflow-hidden pixelated border-8 border-[#4b2d3a]"
         style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
       >
         {gameState === GameState.Start && (
-          <div className="absolute inset-0 bg-black bg-opacity-70 z-20 flex flex-col items-center justify-center p-8 text-white text-shadow">
-            <h1 className="text-6xl mb-4">{t('game.title')}</h1>
-            <p className="text-2xl mb-8 text-center max-w-lg">{t('game.subtitle')}</p>
-            <button onClick={startGame} className="text-4xl bg-[#e0a849] text-black px-8 py-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#f0b95a] transition-colors mb-4">
-              {t('game.startButton')}
-            </button>
-            <button 
-              onClick={() => setShowSettings(true)} 
-              className="text-3xl bg-gray-600 text-white px-6 py-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-gray-700 transition-colors"
-            >
-              ⚙️ {t('game.settings')}
-            </button>
-            <HighScoreDisplay scores={highScores} />
+          <div className="absolute inset-0 bg-black bg-opacity-70 z-20 text-white text-shadow overflow-y-auto">
+            <div className="flex flex-col items-center min-h-full pt-12 pb-8 px-8">
+              <div className="flex-grow flex flex-col items-center justify-center w-full">
+                <h1 className="text-6xl mb-4">{t('game.title')}</h1>
+                <p className="text-2xl mb-8 text-center max-w-lg">{t('game.subtitle')}</p>
+                <button onClick={startGame} className="text-4xl bg-[#e0a849] text-black px-8 py-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#f0b95a] transition-colors mb-4">
+                  {t('game.startButton')}
+                </button>
+                <button 
+                  onClick={() => setShowSettings(true)} 
+                  className="text-3xl bg-gray-600 text-white px-6 py-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-gray-700 transition-colors"
+                >
+                  ⚙️ {t('game.settings')}
+                </button>
+                <HighScoreDisplay scores={highScores} />
+              </div>
+            </div>
           </div>
         )}
 
         {/* Game Over Warning Screen - Shows reason for losing */}
         {gameState === GameState.GameOverWarning && (
-          <div className="absolute inset-0 bg-black bg-opacity-90 z-30 flex flex-col items-center justify-center p-8 text-white text-shadow">
-            <div className="text-center animate-pulse mb-8">
-              <div className="text-8xl mb-4">💔</div>
-              <h1 className="text-7xl mb-6 text-red-500 font-bold">{t('game.youLost')}</h1>
+          <div className="absolute inset-0 bg-black bg-opacity-90 z-30 text-white text-shadow overflow-y-auto">
+            <div className="flex flex-col items-center min-h-full pt-12 pb-8 px-8">
+              <div className="flex-grow flex flex-col items-center justify-center w-full">
+                <div className="text-center animate-pulse mb-8">
+                  <div className="text-8xl mb-4">💔</div>
+                  <h1 className="text-7xl mb-6 text-red-500 font-bold">{t('game.youLost')}</h1>
+                </div>
+                
+                <Panel className="bg-red-900 border-red-700 mb-6">
+                  <p className="text-4xl text-center px-8 py-4 text-yellow-200">
+                    {gameOverReason}
+                  </p>
+                </Panel>
+                
+                <div className="text-center mb-6">
+                  <p className="text-3xl text-green-400 mb-2">{t('game.totalEarnings', { amount: totalEarnings.toFixed(0) })}</p>
+                  <p className="text-2xl text-gray-300">{t('game.currentMoney', { amount: money.toFixed(0) })}</p>
+                </div>
+                
+                <button 
+                  onClick={proceedToGameOver} 
+                  className="text-3xl bg-[#e0a849] text-black px-8 py-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#f0b95a] transition-colors animate-bounce"
+                >
+                  {t('game.continue')}
+                </button>
+              </div>
             </div>
-            
-            <Panel className="bg-red-900 border-red-700 mb-6">
-              <p className="text-4xl text-center px-8 py-4 text-yellow-200">
-                {gameOverReason}
-              </p>
-            </Panel>
-            
-            <p className="text-2xl mb-6 text-gray-300">{t('game.finalMoney', { amount: money.toFixed(0) })}</p>
-            
-            <button 
-              onClick={proceedToGameOver} 
-              className="text-3xl bg-[#e0a849] text-black px-8 py-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#f0b95a] transition-colors animate-bounce"
-            >
-              {t('game.continue')}
-            </button>
           </div>
         )}
 
         {gameState === GameState.GameOver && (
-          <div className="absolute inset-0 bg-black bg-opacity-70 z-20 flex flex-col items-center justify-center p-8 text-white text-shadow">
-            <h1 className="text-6xl mb-4">{t('game.gameOver')}</h1>
-            {isNewHighScore ? (
-              <form onSubmit={handleSaveScore} className="flex flex-col items-center">
-                <h2 className="text-4xl text-yellow-300 mb-2">{t('game.newHighScore')}</h2>
-                <p className="text-3xl mb-4">{t('game.finalMoney', { amount: money.toFixed(0) })}</p>
-                <input
-                  type="text"
-                  value={playerName}
-                  onChange={(e) => setPlayerName(e.target.value)}
-                  placeholder={t('game.enterName')}
-                  maxLength={10}
-                  className="text-3xl p-2 text-black text-center border-4 border-black"
-                />
-                <button type="submit" className="mt-4 text-3xl bg-green-600 hover:bg-green-700 text-white px-6 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                  {t('game.saveScore')}
-                </button>
-              </form>
-            ) : (
-              <>
-                <p className="text-3xl mb-2">{gameOverReason}</p>
-                <p className="text-3xl mb-8">{t('game.finalMoney', { amount: money.toFixed(0) })}</p>
-                <button onClick={startGame} className="text-4xl bg-[#e0a849] text-black px-8 py-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#f0b95a] transition-colors">
-                  {t('game.playAgain')}
-                </button>
-                <HighScoreDisplay scores={highScores} />
-              </>
-            )}
+          <div className="absolute inset-0 bg-black bg-opacity-70 z-20 text-white text-shadow overflow-y-auto">
+            <div className="flex flex-col items-center min-h-full pt-12 pb-8 px-8">
+              <div className="flex-grow flex flex-col items-center justify-center w-full">
+                <h1 className="text-6xl mb-4">{t('game.gameOver')}</h1>
+                {isNewHighScore ? (
+                  <form onSubmit={handleSaveScore} className="flex flex-col items-center">
+                    <h2 className="text-4xl text-yellow-300 mb-2">{t('game.newHighScore')}</h2>
+                    <div className="text-center mb-4">
+                      <p className="text-4xl text-green-400 mb-2">{t('game.totalScore')}: ${totalEarnings.toFixed(0)}</p>
+                      <p className="text-2xl text-gray-300">{t('game.currentMoney', { amount: money.toFixed(0) })}</p>
+                    </div>
+                    <input
+                      type="text"
+                      value={playerName}
+                      onChange={(e) => setPlayerName(e.target.value)}
+                      placeholder={t('game.enterName')}
+                      maxLength={10}
+                      className="text-3xl p-2 text-black text-center border-4 border-black"
+                    />
+                    <button type="submit" className="mt-4 text-3xl bg-green-600 hover:bg-green-700 text-white px-6 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                      {t('game.saveScore')}
+                    </button>
+                  </form>
+                ) : (
+                  <>
+                    <p className="text-3xl mb-2">{gameOverReason}</p>
+                    <div className="text-center mb-8">
+                      <p className="text-4xl text-green-400 mb-2">{t('game.totalScore')}: ${totalEarnings.toFixed(0)}</p>
+                      <p className="text-2xl text-gray-300">{t('game.currentMoney', { amount: money.toFixed(0) })}</p>
+                    </div>
+                    <button onClick={startGame} className="text-4xl bg-[#e0a849] text-black px-8 py-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#f0b95a] transition-colors">
+                      {t('game.playAgain')}
+                    </button>
+                    <HighScoreDisplay scores={highScores} />
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         )}
 
         {(gameState === GameState.Playing || gameState === GameState.Cutting) && (
           <>
-            <Hud money={money} reputation={reputation} provisions={provisions} />
+            <Hud money={money} totalEarnings={totalEarnings} reputation={reputation} provisions={provisions} />
             <GameScene 
               npcs={npcs} 
               playerPos={playerPos} 

@@ -4,6 +4,7 @@ import { GameState, Npc } from '../types';
 import {
   MAX_QUEUE_LENGTH,
   PATIENCE_DECAY_RATE,
+  PATIENCE_DECAY_INCREASE_PER_MINUTE,
   NPC_QUEUE_SPACING,
   SHOP_WINDOW_POS,
   CHEESE_TYPES,
@@ -46,6 +47,9 @@ export const useGameLoop = ({ gameState, npcs, setNpcs, updateReputation }: UseG
       const minutesPassed = elapsedSeconds / 60;
       const spawnRateDecrease = Math.floor(minutesPassed) * SPAWN_RATE_DECREASE_PER_MINUTE;
       const currentSpawnRate = Math.max(MIN_SPAWN_RATE_MS, INITIAL_NPC_SPAWN_RATE_MS - spawnRateDecrease);
+      
+      // Dynamic patience decay - gets worse over time
+      const currentPatienceDecay = PATIENCE_DECAY_RATE + (minutesPassed * PATIENCE_DECAY_INCREASE_PER_MINUTE);
 
       // --- NPC Spawning ---
       if (Date.now() - lastNpcSpawnTime.current > currentSpawnRate && npcs.length < MAX_QUEUE_LENGTH) {
@@ -90,7 +94,7 @@ export const useGameLoop = ({ gameState, npcs, setNpcs, updateReputation }: UseG
                }
           }
           
-          newPatience -= PATIENCE_DECAY_RATE;
+          newPatience -= currentPatienceDecay; // Use dynamic decay rate
 
           return { ...npc, patience: newPatience, position: newPosition, isWaiting };
         });

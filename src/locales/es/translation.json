@@ -7,6 +7,9 @@
     "gameOver": "Fin del Juego",
     "youLost": "¡PERDISTE!",
     "continue": "Continuar",
+    "totalEarnings": "Total Ganado: ${{amount}}",
+    "totalScore": "Puntuación Total",
+    "currentMoney": "Dinero Restante: ${{amount}}",
     "finalMoney": "Dinero final: ${{amount}}",
     "newHighScore": "¡Nuevo Récord!",
     "enterName": "Ingresa tu nombre",
@@ -17,6 +20,7 @@
   },
   "hud": {
     "money": "${{amount}}",
+    "score": "Puntuación",
     "reputation": "Reputación",
     "stock": "{{amount}}g",
     "cheeseStock": "Stock de Queso",

@@ -7,6 +7,9 @@
     "gameOver": "Game Over",
     "youLost": "YOU LOST!",
     "continue": "Continue",
+    "totalEarnings": "Total Earned: ${{amount}}",
+    "totalScore": "Total Score",
+    "currentMoney": "Money Left: ${{amount}}",
     "finalMoney": "Final money: ${{amount}}",
     "newHighScore": "New High Score!",
     "enterName": "Enter your name",
@@ -17,6 +20,7 @@
   },
   "hud": {
     "money": "${{amount}}",
+    "score": "Score",
     "reputation": "Reputation",
     "stock": "{{amount}}g",
     "cheeseStock": "Cheese Stock",
