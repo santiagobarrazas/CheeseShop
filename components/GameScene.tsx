@@ -113,12 +113,27 @@ const GameScene: React.FC<GameSceneProps> = ({ npcs, playerPos, setPlayerPos, ca
                   <div className="absolute top-20 left-0 right-0 h-1 bg-[#5a3320]"></div>
                   <div className="absolute top-30 left-0 right-0 h-1 bg-[#5a3320]"></div>
                   
-                  {/* Cheese wheels on shelf */}
-                  <div className="absolute top-2 left-2 w-6 h-5 bg-yellow-400 rounded-full border border-black shadow-sm"></div>
-                  <div className="absolute top-2 left-10 w-6 h-5 bg-orange-300 rounded-full border border-black shadow-sm"></div>
-                  <div className="absolute top-12 left-2 w-6 h-5 bg-yellow-100 rounded-full border border-black shadow-sm"></div>
-                  <div className="absolute top-12 left-10 w-6 h-5 bg-yellow-400 rounded-full border border-black shadow-sm"></div>
-                  <div className="absolute top-22 left-6 w-6 h-5 bg-orange-300 rounded-full border border-black shadow-sm"></div>
+                  {/* Cheese wheels on shelf with images */}
+                  <div 
+                    className="absolute top-2 left-2 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                  ></div>
+                  <div 
+                    className="absolute top-2 left-10 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Gouda.jpg)', backgroundSize: 'cover' }}
+                  ></div>
+                  <div 
+                    className="absolute top-12 left-2 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Brie.jpg)', backgroundSize: 'cover' }}
+                  ></div>
+                  <div 
+                    className="absolute top-12 left-10 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                  ></div>
+                  <div 
+                    className="absolute top-22 left-6 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Gouda.jpg)', backgroundSize: 'cover' }}
+                  ></div>
                 </div>
                 
                 {/* Enhanced Right Shelf */}
@@ -127,10 +142,23 @@ const GameScene: React.FC<GameSceneProps> = ({ npcs, playerPos, setPlayerPos, ca
                   <div className="absolute top-10 left-0 right-0 h-1 bg-[#5a3320]"></div>
                   <div className="absolute top-20 left-0 right-0 h-1 bg-[#5a3320]"></div>
                   
-                  <div className="absolute top-2 left-2 w-6 h-5 bg-yellow-400 rounded-full border border-black shadow-sm"></div>
-                  <div className="absolute top-2 left-10 w-6 h-5 bg-yellow-100 rounded-full border border-black shadow-sm"></div>
-                  <div className="absolute top-12 left-6 w-6 h-5 bg-orange-300 rounded-full border border-black shadow-sm"></div>
-                  <div className="absolute top-22 left-2 w-6 h-5 bg-yellow-400 rounded-full border border-black shadow-sm"></div>
+                  {/* Cheese wheels with images */}
+                  <div 
+                    className="absolute top-2 left-2 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                  ></div>
+                  <div 
+                    className="absolute top-2 left-10 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Brie.jpg)', backgroundSize: 'cover' }}
+                  ></div>
+                  <div 
+                    className="absolute top-12 left-6 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Gouda.jpg)', backgroundSize: 'cover' }}
+                  ></div>
+                  <div 
+                    className="absolute top-22 left-2 w-6 h-5 rounded-full border border-black shadow-sm overflow-hidden"
+                    style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+                  ></div>
                 </div>
                 
                 {/* Clock on wall */}
@@ -151,9 +179,15 @@ const GameScene: React.FC<GameSceneProps> = ({ npcs, playerPos, setPlayerPos, ca
               <div className="absolute top-1 left-0 right-0 h-0.5 bg-[#5a3320] opacity-40"></div>
               <div className="absolute top-3 left-0 right-0 h-0.5 bg-[#5a3320] opacity-30"></div>
               
-              {/* Cheese samples on counter */}
-              <div className="absolute top-[-20px] left-10 w-14 h-7 bg-yellow-400 rounded-md border-2 border-black shadow-md transform -rotate-6"></div>
-              <div className="absolute top-[-18px] left-28 w-10 h-6 bg-orange-300 rounded-md border-2 border-black shadow-md transform rotate-12"></div>
+              {/* Cheese samples on counter with images */}
+              <div 
+                className="absolute top-[-20px] left-10 w-14 h-7 rounded-md border-2 border-black shadow-md transform -rotate-6 overflow-hidden"
+                style={{ backgroundImage: 'url(/img/Cheddar.jpg)', backgroundSize: 'cover' }}
+              ></div>
+              <div 
+                className="absolute top-[-18px] left-28 w-10 h-6 rounded-md border-2 border-black shadow-md transform rotate-12 overflow-hidden"
+                style={{ backgroundImage: 'url(/img/Gouda.jpg)', backgroundSize: 'cover' }}
+              ></div>
               
               {/* Knife */}
               <div className="absolute top-[-16px] right-20 w-16 h-1 bg-gray-300 border border-black transform rotate-45">

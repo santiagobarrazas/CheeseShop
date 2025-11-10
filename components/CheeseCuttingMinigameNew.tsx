@@ -263,66 +263,72 @@ const CheeseCuttingMinigame: React.FC<CheeseCuttingMinigameProps> = ({ order, re
         </div>
         
         <div 
-          className="p-8 bg-[#d2a679] rounded-lg border-8 border-[#a07b56] shadow-[12px_12px_0px_0px_rgba(0,0,0,0.3)] flex justify-center items-center"
+          className="p-8 bg-[#d2a679] rounded-lg border-8 border-[#a07b56] shadow-[12px_12px_0px_0px_rgba(0,0,0,0.3)] flex justify-center items-center relative"
         >
-            <div 
-              ref={cheeseRef}
-              className={`relative rounded-full border-4 ${cheeseInfo.borderColor} ${cheeseInfo.color} ${phase === 'cutting' ? 'cursor-crosshair' : 'cursor-default'} shadow-inner`}
-              style={{ width: CHEESE_WHEEL_SIZE, height: CHEESE_WHEEL_SIZE }}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-            >
-              {/* Guide path */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                <polyline 
-                    points={guidePath.map(p => `${p.x},${p.y}`).join(' ')}
-                    fill="none"
-                    stroke="#000000"
-                    strokeWidth="3"
-                    strokeDasharray="8,8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    opacity="0.6"
-                />
-              </svg>
-
-              {/* User's cut path */}
-              {cutPath.length > 1 && (
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none">
+            {phase === 'cutting' && (
+              <div 
+                ref={cheeseRef}
+                className={`relative rounded-full overflow-hidden cursor-crosshair shadow-inner border-4 ${cheeseInfo.borderColor}`}
+                style={{ 
+                  width: CHEESE_WHEEL_SIZE, 
+                  height: CHEESE_WHEEL_SIZE,
+                  backgroundImage: `url(/img/${order.cheeseType}.jpg)`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+              >
+                {/* Guide path */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none">
                   <polyline 
-                      points={cutPath.map(p => `${p.x},${p.y}`).join(' ')}
+                      points={guidePath.map(p => `${p.x},${p.y}`).join(' ')}
                       fill="none"
-                      stroke={phase === 'result' ? '#00ff00' : '#ff3333'} 
-                      strokeWidth="4"
+                      stroke="#000000"
+                      strokeWidth="3"
+                      strokeDasharray="8,8"
                       strokeLinecap="round"
                       strokeLinejoin="round"
+                      opacity="0.6"
                   />
-                  </svg>
-              )}
+                </svg>
 
-              {phase === 'result' && cutResult && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Panel className="text-black text-shadow-none text-2xl flex flex-col items-center space-y-1">
-                      <h3 className="text-3xl underline">{t('minigame.cutResult')}</h3>
-                      <p>{t('minigame.accuracy', { percent: (cutResult.accuracy * 100).toFixed(0) })}</p>
-                      <p>{t('minigame.salePrice', { price: cutResult.finalPrice })}</p>
-                      <p>
-                        {t('minigame.reputationChange', { 
-                          change: `${cutResult.repChange >= 0 ? '+' : ''}${cutResult.repChange.toFixed(1)}`
-                        })}
-                        <span className={`font-bold ml-2 ${cutResult.repChange >= 0 ? 'text-green-700' : 'text-red-700'}`}>
-                          {cutResult.repChange >= 0 ? '▲' : '▼'}
-                        </span>
-                      </p>
-                      <button onClick={confirmCut} className="mt-2 text-3xl bg-green-600 hover:bg-green-700 text-white px-6 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                        {t('minigame.confirm')}
-                      </button>
-                    </Panel>
-                  </div>
-              )}
-            </div>
+                {/* User's cut path */}
+                {cutPath.length > 1 && (
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                    <polyline 
+                        points={cutPath.map(p => `${p.x},${p.y}`).join(' ')}
+                        fill="none"
+                        stroke='#ff3333'
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                    </svg>
+                )}
+              </div>
+            )}
+
+            {phase === 'result' && cutResult && (
+              <Panel className="text-black text-shadow-none text-2xl flex flex-col items-center space-y-1">
+                <h3 className="text-3xl underline">{t('minigame.cutResult')}</h3>
+                <p>{t('minigame.accuracy', { percent: (cutResult.accuracy * 100).toFixed(0) })}</p>
+                <p>{t('minigame.salePrice', { price: cutResult.finalPrice })}</p>
+                <p>
+                  {t('minigame.reputationChange', { 
+                    change: `${cutResult.repChange >= 0 ? '+' : ''}${cutResult.repChange.toFixed(1)}`
+                  })}
+                  <span className={`font-bold ml-2 ${cutResult.repChange >= 0 ? 'text-green-700' : 'text-red-700'}`}>
+                    {cutResult.repChange >= 0 ? '▲' : '▼'}
+                  </span>
+                </p>
+                <button onClick={confirmCut} className="mt-2 text-3xl bg-green-600 hover:bg-green-700 text-white px-6 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  {t('minigame.confirm')}
+                </button>
+              </Panel>
+            )}
         </div>
 
         {phase === 'cutting' && (
